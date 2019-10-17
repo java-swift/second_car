@@ -9,4 +9,4 @@ second car predict test
  
 * 安装tensorflow
 
-_pip3 install tensorflow
+_pip3 install tensorflow_
