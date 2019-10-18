@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+</head>
+<body>
+<fieldset>
+    <legend>预测信息</legend>
+    <form>
+        <table>
+            <tr><td><label for="city">地区</label></td><td><select id="city" name="city">
+                <option value="上海">上海</option>
+                <option value="乌鲁木齐">乌鲁木齐</option>
+                <option value="兰州" selected>兰州</option>
+                <option value="北京">北京</option>
+                <option value="南京">南京</option>
+                <option value="南宁">南宁</option>
+                <option value="南昌">南昌</option>
+                <option value="合肥">合肥</option>
+                <option value="呼和浩特">呼和浩特</option>
+                <option value="哈尔滨">哈尔滨</option>
+                <option value="天津">天津</option>
+                <option value="太原">太原</option>
+                <option value="广州">广州</option>
+                <option value="成都">成都</option>
+                <option value="昆明">昆明</option>
+                <option value="杭州">杭州</option>
+                <option value="武汉">武汉</option>
+                <option value="沈阳">沈阳</option>
+                <option value="济南">济南</option>
+                <option value="深圳">深圳</option>
+                <option value="石家庄">石家庄</option>
+                <option value="福州">福州</option>
+                <option value="苏州">苏州</option>
+                <option value="西宁">西宁</option>
+                <option value="西安">西安</option>
+                <option value="贵阳">贵阳</option>
+                <option value="郑州">郑州</option>
+                <option value="重庆">重庆</option>
+                <option value="银川">银川</option>
+                <option value="长春">长春</option>
+                <option value="长沙">长沙</option>
+            </select></td></tr>
+            <tr><td><label for="brand">品牌</label></td><td><input id="brand" type="text" name="brand" value="雪佛兰" placeholder="请输入品牌，如宝马，奥迪"/></td></tr>
+            <tr><td><label for="output_volume">排量</label></td><td><input id="output_volume" type="text" value="2.4L" name="output_volume"/></td></tr>
+            <tr><td><label for="launch_year">年份</label></td><td><input id="launch_year" type="text" value="2016" name="launch_year"/></td></tr>
+            <tr><td><label for="kilometres">已跑公里数(万)</label></td><td><input id="kilometres" type="text" value="8.9" name="kilometres"/></td></tr>
+            <tr><td><label for="is_import">是否进口</label></td><td> <select id="is_import" name="is_import">
+                <option value="0" selected>国产</option>
+                <option value="1">进口</option>
+            </select></td></tr>
+            <tr><td><label for="old_price">原价</label></td><td><input type="number" id="old_price" name="old_price" value="20.61"/></td></tr>
+            <tr><td><label for="gear_type">档位</label></td><td><select id="gear_type" name="gear_type">
+                <option value="自动挡" selected>自动挡</option>
+                <option value="手动挡">手动挡</option>
+            </select></td></tr>
+            <tr><td><input type="button" value="predict" id="predict-btn"/></td><td><input type="text" value="value" id="val-id"/></td></tr>
+        </table>
+
+    </form>
+</fieldset>
+</body>
+
+<script type="text/javascript" src="../static/jquery-3.3.1.min.js"></script>
+<script>
+
+    $("#predict-btn").click(function () {
+        var data = {
+            city: $("#city option:selected").val(), brand: $("#brand").val(), output_volume: $("#output_volume").val(),
+            launch_year: $("#launch_year").val(), kilometres: $("#kilometres").val(), is_import: $("#is_import").val(),
+            old_price: $("#old_price").val(), gear_type: $("#gear_type").val()
+        };
+        $.ajax({
+            url: "/predict",
+            type: "POST",
+            dataType: "json",
+            data: JSON.stringify(data),
+            success: function (val) {
+                console.log(val);
+                $("#val-id").val(val.result);
+            }
+        })
+    });
+</script>
+</html>
