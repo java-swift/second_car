@@ -10,3 +10,8 @@ second car predict test
 * 安装tensorflow
 
 _pip3 install tensorflow_
+
+* 安装flask
+
+_pip3 install flask_
+
