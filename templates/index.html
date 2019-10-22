@@ -43,7 +43,7 @@
                 <option value="长沙">长沙</option>
             </select></td></tr>
             <tr><td><label for="brand">品牌</label></td><td><input id="brand" type="text" name="brand" value="雪佛兰" placeholder="请输入品牌，如宝马，奥迪"/></td></tr>
-            <tr><td><label for="output_volume">排量</label></td><td><input id="output_volume" type="text" value="2.4L" name="output_volume"/></td></tr>
+            <tr><td><label for="output_volume">排量</label></td><td><input id="output_volume" type="text" value="2.4" name="output_volume"/></td></tr>
             <tr><td><label for="launch_year">年份</label></td><td><input id="launch_year" type="text" value="2016" name="launch_year"/></td></tr>
             <tr><td><label for="kilometres">已跑公里数(万)</label></td><td><input id="kilometres" type="text" value="8.9" name="kilometres"/></td></tr>
             <tr><td><label for="is_import">是否进口</label></td><td> <select id="is_import" name="is_import">
@@ -55,7 +55,9 @@
                 <option value="自动挡" selected>自动挡</option>
                 <option value="手动挡">手动挡</option>
             </select></td></tr>
-            <tr><td><input type="button" value="predict" id="predict-btn"/></td><td><input type="text" value="value" id="val-id"/></td></tr>
+            <tr><td><input type="button" value="xgb" id="predict-btn"/></td><td><label for="val-id"></label><input type="text" value="value" id="val-id"/></td></tr>
+            <tr><td><input type="button" value="torch" id="predict-torch-btn"/></td><td><label for="val-torch-id"></label><input type="text" value="value" id="val-torch-id"/></td></tr>
+
         </table>
 
     </form>
@@ -72,13 +74,30 @@
             old_price: $("#old_price").val(), gear_type: $("#gear_type").val()
         };
         $.ajax({
-            url: "/predict",
+            url: "/predict_xgb",
             type: "POST",
             dataType: "json",
             data: JSON.stringify(data),
             success: function (val) {
                 console.log(val);
                 $("#val-id").val(val.result);
+            }
+        })
+    });
+    $("#predict-torch-btn").click(function () {
+        var data = {
+            city: $("#city option:selected").val(), brand: $("#brand").val(), output_volume: $("#output_volume").val(),
+            launch_year: $("#launch_year").val(), kilometres: $("#kilometres").val(), is_import: $("#is_import").val(),
+            old_price: $("#old_price").val(), gear_type: $("#gear_type").val()
+        };
+        $.ajax({
+            url: "/predict_torch",
+            type: "POST",
+            dataType: "json",
+            data: JSON.stringify(data),
+            success: function (val) {
+                console.log(val);
+                $("#val-torch-id").val(val.result);
             }
         })
     });
