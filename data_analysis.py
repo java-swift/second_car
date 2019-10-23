@@ -46,29 +46,29 @@ kilometres_step = pd.cut(df_one_process['kilometres'], bin)
 df_one_process['kilometres_step'] = kilometres_step
 
 
-画品牌直方图,一共300多个品牌，取前50名数量最多的
+#画品牌直方图,一共300多个品牌，取前50名数量最多的
 brand_groups = df_one_process.groupby(['brand']).count().nlargest(50, 'city')
 print(brand_groups)
 brand_groups['city'].plot('bar')
 plt.show()
 
-画里程分布直方图
+#画里程分布直方图
 kilometres_groups = df_one_process.groupby(['kilometres_step']).count()
 kilometres_groups['city'].plot('bar')
 plt.show()
 
 
-画年份直方图
+#画年份直方图
 year_groups = df_one_process.groupby(['launch_year']).count()
 year_groups['city'].plot('bar')
 plt.show()
 
-画手动档自动挡直方图
+#画手动档自动挡直方图
 gear_groups = df_one_process.groupby(['gear_type']).count()
 gear_groups['city'].plot('bar')
 plt.show()
 
-画进口与否直方图
+#画进口与否直方图
 import_groups = df_one_process.groupby(['is_import']).count()
 import_groups['city'].plot('bar')
 plt.show()
