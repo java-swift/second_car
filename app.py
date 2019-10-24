@@ -133,3 +133,6 @@ def parse_data(req):
     old_price = data.get('old_price')
     gear_type = data.get('gear_type')
     return city, brand, output_volume, launch_year, kilometres, is_import, old_price, gear_type
+
+if __name__ == '__main__':
+    app.run(debug=True) # 启动应用
