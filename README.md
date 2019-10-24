@@ -17,7 +17,7 @@ _pip3 install flask pymysql_
 
 * 安装 seaborn画图工具库
 
-_pip3 install seaborn
+_pip3 install seaborn_
 
 * 安装pytorch 神经网络库
 
