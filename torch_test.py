@@ -40,6 +40,7 @@ for col in df:
 
 c = json.dumps(label_code_map['city'].tolist())
 b = json.dumps(label_code_map['brand'].tolist())
+
 def get_cursor():
     c = db.config()
     conn = pymysql.connect(host=c['host'], port=c['port'], user=c['user'], password=c['password'], charset=c['charset'], database=c['database'])
@@ -47,7 +48,7 @@ def get_cursor():
     return cursor, conn
 # 将编码保存，在预测时使用
 cursor, conn = get_cursor()
-sql = 'insert into t_encoder(city, brand, output_volume) values(%s, %s)'
+sql = 'insert into t_encoder(city, brand) values(%s, %s)'
 
 cursor.execute(sql, [c, b])
 conn.commit()
@@ -63,7 +64,7 @@ dz, mean_, var_ = z_scrore_normalize_feature(df.iloc[:, :8])
 import json
 c = json.dumps(mean_.tolist())
 b = json.dumps(var_.tolist())
-# In[90]:
+print(c)
 
 cursor, conn = get_cursor()
 sql = 'insert into t_statistics(mean, var) values(%s, %s)'
@@ -129,13 +130,15 @@ for each_epoch in range(epochs):
     loss_value = loss(predictions, train_labels)
     loss_value.backward()
     optimizer.step()
-    if each_epoch % 100 == 0:
-        print(f"epoch: {each_epoch}, loss: {loss_value.data}")
+    if (each_epoch+1) % 100 == 0:
+        print(f"epoch: {each_epoch+1}, loss: {loss_value.data}")
 
 model.eval()
 
 torch.save(model, 'torch.model')
 y_pred = model(test_features).detach().numpy()
+loss_v = loss(torch.from_numpy(y_pred), test_labels)
+print(loss_v)
 
 # 输入数据，预测
 a = np.array([0, 230, 2.0, 2015, 4.4, 0, 24.18, 0])

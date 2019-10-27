@@ -17,12 +17,12 @@ def index():
 @app.route('/predict_xgb', methods=['GET', 'POST'])
 def predict_xg():
     city, brand, output_volume, launch_year, kilometres, is_import, old_price, gear_type = parse_data(request)
-    g1, g2 = 0, 1
-    if gear_type == '自动挡':
-        g1, g2 = 0, 1
+    g1 = 1
+    if gear_type == '自动挡':  # 自动挡0，手动挡1
+        g1 = 0
     else:
-        g1, g2 = 1, 0
-    l = [city, brand, output_volume, launch_year, kilometres, is_import, old_price, g1, g2]
+        g1 = 1
+    l = [city, brand, output_volume, launch_year, kilometres, is_import, old_price, g1]
     result = get_encoder()
     city_l = np.array(json.loads(result[0]))
     brand_l = np.array(json.loads(result[1]))
@@ -42,7 +42,7 @@ def predict_xg():
     t = list()
     t.append(tu)
     print(pd)
-    t = pd.DataFrame(t, columns=['city', 'brand', 'output_volume', 'launch_year', 'kilometres', 'is_import', 'old_price', 'gear_type_手动挡', 'gear_type_自动挡'])
+    t = pd.DataFrame(t, columns=['city', 'brand', 'output_volume', 'launch_year', 'kilometres', 'is_import', 'old_price', 'gear_type', 'gear_type'])
 
     model = xgb.Booster(model_file='xgboost.model')
     t = xgb.DMatrix(t)

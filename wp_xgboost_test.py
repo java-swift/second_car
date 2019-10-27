@@ -81,6 +81,7 @@ evalute_result = optimized_GBM.return_train_score
 print('每轮迭代运行结果:{0}'.format(evalute_result))
 print('参数的最佳取值：{0}'.format(optimized_GBM.best_params_))
 print('最佳模型得分:{0}'.format(optimized_GBM.best_score_))
+model.save_model('xgboost.model')
 y_pred = model.predict(x_test)
 
 # 兰州	雪佛兰	2.4L	2016	8.9	0	20.61	自动挡	8.1
