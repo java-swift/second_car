@@ -1,3 +1,4 @@
+
 # second_car
 second car predict test
 ## 步骤
@@ -29,3 +30,11 @@ python app.py
 
 在浏览器地址栏输入 http://localhost:5000 显示如下页面：
 ![](images/index.png)
+
+## 归一化公式
+* 最大最小值归一化
+
+![min-max](images/min-max.png)
+* Z-score归一化
+
+![z-score](images/z-score.png)
